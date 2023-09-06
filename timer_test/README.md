@@ -30,8 +30,27 @@ Then:
 - The 4th call will start at t = 6s,
 - Etc.
 
+Initial conclusion (not entirely correct):
 I.e. desired callback time is defined as: previous callback start time + timer period.
 Otherwise calls 2, 3 and 4 would all be made asap after completion of call 1 and call 5 at t = 5s.
+Correct conclusion:
+See [here](https://discourse.ros.org/t/ros-2-timer-behavior-when-callbacks-take-longer-than-the-timer-period/32536/2): timer aligns itself to the initial 'phase' of the timer.
+
+E.g. consider timer with period 1s, and each call takes 0.001s except the 5th call takes 3,5s and the 6th call takes 2,2s.
+This yields following times:
+
+```
+         Starts at time     Finishes at time
+Call 1:          1                1.001
+Call 2:          2                2.001
+Call 3:          3                3.001
+Call 4:          4                4.001
+Call 5:          5                8.5
+Call 6:          8.5              10.7
+Call 7:         10.7              10.701
+Call 8:         11                11.001
+Call 9:         12                12.001
+```
 
 </br>
 </br>
