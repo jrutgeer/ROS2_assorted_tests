@@ -49,13 +49,13 @@ public:
     LoggingNode(std::string name) : Node(name)
     {
       timer_ = this->create_wall_timer(
-      500ms, std::bind(&LoggingNode::timer_callback, this));
+      50ms, std::bind(&LoggingNode::timer_callback, this));
     }
 
 private:
     void timer_callback()
     {
-      RCLCPP_INFO_ONCE(this->get_logger(), "Logging debug messages at 2 Hz");
+      RCLCPP_INFO_ONCE(this->get_logger(), "Logging debug messages at 20 Hz");
       RCLCPP_DEBUG(this->get_logger(), "Debug message");
     }
 
